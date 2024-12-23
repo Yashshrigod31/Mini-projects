@@ -1,9 +1,7 @@
 import streamlit as st
 
-# File-based Expense Tracker
 FILE_NAME = "expenses.txt"
 
-# Ensure file exists
 try:
     open(FILE_NAME, "x").close()
 except FileExistsError:
@@ -36,16 +34,14 @@ def get_total_expenses():
     """Calculate the total amount spent."""
     return sum(float(amount) for _, amount, _ in view_expenses())
 
-# Streamlit UI
 st.title("Expense Tracker with File Persistence")
 st.sidebar.header("Add Expense")
 
-# Input Fields
 category = st.sidebar.text_input("Category", placeholder="e.g., Food, Transport")
 amount = st.sidebar.number_input("Amount", min_value=0.01, step=0.01, format="%.2f")
 date = st.sidebar.date_input("Date")
 
-# Add Expense Button
+
 if st.sidebar.button("Add Expense"):
     if category and amount > 0:
         add_expense(category, amount, date)
@@ -53,7 +49,7 @@ if st.sidebar.button("Add Expense"):
     else:
         st.sidebar.warning("Please enter valid category and amount.")
 
-# Display Expenses
+
 st.header("Expense List")
 expenses = view_expenses()
 
@@ -66,11 +62,11 @@ if expenses:
 else:
     st.info("No expenses recorded yet.")
 
-# Total Expenses
+
 st.header("Total Expenses")
 total = get_total_expenses()
 st.write(f"**Total Spent**: ₹{total:.2f}")
 
-# Footer
+
 st.write("---")
 st.caption("Developed with ❤️ using Streamlit.")
